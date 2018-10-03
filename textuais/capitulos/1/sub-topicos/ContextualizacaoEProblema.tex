@@ -1,0 +1,51 @@
+\section{Contextualização e Problema}
+    \label{subsec:contextualizacao-problema}
+    
+    % Aprendizado de Máquina
+    % Aprendizado Semi-Supervisionado
+        % Self-Training
+    % classificadors de Aprendizagem (classificadores)
+    % Limiar de taxa fixa
+    
+    \citeonline{mitchell1997machine} afirma que um programa de computador aprende com a experiência $E$, em relação a alguma classe de tarefas $T$ e com o seu desempenho mensurado por $P$, se seu desempenho nas tarefas $T$, medidos por $P$, melhoram com a experiência $E$. Isto é, quando a máquina realiza uma escolha, tendo como base um histórico obtido pela mesma, essa decisão é definida como \ac{am}.
+
+    % O \ac{am} apresenta\hyp{se} como uma possível solução para análise de grandes volumes de dados, pois quando tais análises são desenvolvida por seres humanos, possuem alguns empecilhos, dentre eles: a incapacidade do processamento humano sobre grandes volumes de dados e a necessidade de especialistas sobre o domínio dos dados para serem bem analisados. Por sua vez, uma máquina que possua a característica de aprendizado pode realizar esse processo de análise mais rápida e com um custo reduzido.
+    O \ac{am} apresenta\hyp{se} como uma possível solução para a análise de grandes volumes de dados, uma vez que estas análises possuem algumas dificuldades quando desenvolvidas por seres humanos. Grandes volumes de dados demandam muito tempo para humanos processarem, além de serem necessários especialistas sobre o domínio dos dados para serem bem analisados. Por sua vez, uma máquina que possua a característica de aprendizado pode realizar esse processo de análise mais rápida e com um custo reduzido. Assim, surgiu a necessidade de desenvolver algoritmos capazes de aprender padrões e realizar tais tarefas.
+    
+    % dentre eles: i) o custo elevado; ii) necessidade de especialistas iii) risco da realização de análises subjetivas; iv) gasto de tempo em grandes volumes de dados. P
+    
+    % pode desenvolver a capacidade de extração de informações e realizar tais tarefas com um custo reduzido.
+    
+    A literatura descreve que o \ac{am} possui tarefas de classificação, agrupamento (\textit{clustering}) e regressão. \citeonline{alpaydin2004introduction} e \citeonline{mohri2012foundations} descrevem como:
+    \begin{enumerate}[label=\roman*.]
+        \item Classificação {--} Cada objeto é associado a um rótulo que representa uma das classes existentes, a partir de instâncias cujo rótulo seja conhecido;
+        \item Agrupamento (\textit{clustering}) {--} Os objetos são agrupados de acordo com suas características, de forma que um objeto não pertença simultaneamente a mais de um agrupamento;
+        \item Regressão {--} A partir de funções matemáticas, busca\hyp{se} encontrar relações algébricas entre atributos;
+    \end{enumerate}
+    
+    \citeonline{chapelle2006semi} descrevem que no \ac{am} tradicionalmente existem dois tipos de tarefas, o aprendizado supervisionado e o aprendizado não supervisionado. O aprendizado supervisionado faz uso de classificação ou regressão, enquanto o aprendizado não supervisionado faz uso de agrupamentos (\textit{clusterings}).
+    
+    
+    A técnica de \textit{clustering} é capaz de realizar uma separação dos objetos de acordo com suas similaridades baseando\hyp{se} em um conjunto de características. Essa técnica pode ser utilizada quando não existe a necessidade de identificar a qual classe um determinado objeto pertence. Na classificação de dados, os algoritmos auxiliam no processo de encontrar padrões em grandes quantidades de dados. Essa técnica é utilizada quando é desejado treinar a máquina para identificar a categoria a qual pertence um determinado objeto.
+    
+    O treinamento é uma etapa decisiva na obtenção de um modelo capaz de classificar corretamente os objetos com base em suas características. Nesta etapa, o algoritmo de classificação é aplicado sobre um conjunto de dados com a finalidade de gerar um classificador. A partir deste, é possível desempenhar a tarefa de classificação sobre novos conjuntos de dados.
+    
+    Um dos desafios do \ac{am} está em como realizar esse treinamento, pois nem sempre as bases de dados possuem objetos suficientes para realizá\hyp{lo} pelas formas tradicionais. Por isso, uma área tem ganhado muita atenção dos pesquisadores, o Aprendizado Semissupervisionado (\ac{ssl}) que, a partir de uma pequena parcela de objetos classificados, consegue atribuir as classes ao restante. Ou seja, a necessidade de possuir um grande conjunto de dados com o seu devido rótulo deixa de ser prioridade, pois o conjunto de dados classificado passa a ser maior ao fim de cada iteração do algoritmo.
+    
+    % algoritmos SSL pegam n exemplos por iteração
+    % uso de limiares
+    % taxa de controle do limiar
+    %
+    %
+    
+    Os algoritmos do \ac{ssl} são capazes de realizar o treinamento a partir de um conjunto pequeno de instâncias inicialmente rotuladas e normalmente classificam \textit{n} instâncias por iteração. Há variações destes algoritmos que fazem uso de limiares (confiança mínima) com a intenção de inserir no conjunto dos dados rotulados somente as instâncias que possuem a confiança atribuída pelo classificador, maior que o limiar. Isto é, o limiar é um fator de inclusão que torna variável o número de instâncias que são incluídas por iteração, pois só são selecionadas as instâncias com alto valor de confiança.
+    
+    %O uso do limiar fixo possui uma desvantagem, pode resultar na não classificação de todo o conjunto de dados. Existem diversas maneiras de resolver essa situação, dentre elas, utilizar uma taxa de controle, que auxilie na variação do limiar, ora aumentando, ora diminuindo esse valor, de forma a permitir a inclusão de novas instâncias.
+    
+    O uso do limiar fixo pode resultar na não classificação de todo o conjunto de dados. Sendo assim, uma das formas de resolver esse problema é utilizando uma taxa de controle, que auxilie na variação do limiar, ora aumentando, ora diminuindo esse valor, de forma a permitir a inclusão de novas instâncias.
+    
+    % Os algoritmos que fazem uso de uma taxa de controle para a variação do limiar normalmente a fixam, qual o impacto na classificação de dados caso essa taxa seja para a cada iteração? Então, este trabalho pretende fazer uso de um taxa variável para tentar melhorar métodos já propostos em outros estudos.
+    
+    \citeonline{vale2018selftraining} apresenta o algoritmo \ac{flexcon}, que faz uso do limiar e de um fator (taxa de variação) que altera\hyp{o} de maneira mais lenta. Esse algoritmo possui duas variações são elas: \textit{FlexCon\hyp{C1}} e \textit{FlexCon\hyp{C2}}. O \textit{FlexCon\hyp{C1}} faz uma comparação entre a predição da iteração atual com a predição da primeira iteração. O \textit{FlexCon\hyp{C2}} compara a predição atual com a predição de um classificador supervisionado que é treinado com o conjunto de instâncias que estão inicialmente rotuladas. Este trabalho pretende analisar o impacto na classificação dos dados quando a taxa de variação do limiar é manipulada.
+    
+    % \citeonline{vale2018selftraining} apresenta o algoritmo \ac{flexcon}, que faz uso do limiar e de um fator (taxa de variação) que altera\hyp{o} de maneira mais lenta. Esse algoritmo possui duas variações são elas: \textit{FlexCon\hyp{C1}} e \textit{FlexCon\hyp{C2}}. O \textit{FlexCon\hyp{C1}} faz uma comparação entre a predição da iteração atual com a predição da primeira iteração. O \textit{FlexCon\hyp{C2}} compara a predição atual com a predição de um classificador supervisionado que é treinado com o conjunto de instâncias que estão inicialmente rotuladas. Neste trabalho foi analisado o impacto na classificação dos dados quando a taxa de variação do limiar é alterada.

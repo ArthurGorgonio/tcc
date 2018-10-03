@@ -1,0 +1,63 @@
+\section{Modelos de Aprendizagem}
+    \label{sec:classifiers}
+    
+    Os Modelos de Aprendizagem possuem categorias de classificadores que são responsáveis por aprender os padrões existentes no conjunto de treinamento. Isto é, o classificador é gerado a partir da aplicação do conjunto de treinamento em um algoritmo de \ac{am}. Há, na literatura, diversas formas de agrupar os classificadores, a Figura~\ref{fig:types-of-learners} apresenta algumas das sub-divisões existentes considerando as diversas sub-áreas de aprendizado, bem como, as categorias do \ac{am}. A parte destacada será utilizada neste trabalho.
+    
+    \begin{figure}[!h]
+        \centering
+        \caption{Categorias dos Modelos de Aprendizagem.}
+        \includegraphics[scale = 0.33]{figuras/Types-of-learners.png}
+        \source{Adaptado de~\cite{gollapudi2016practical}}
+        \label{fig:types-of-learners}
+    \end{figure}
+
+    % Os \textbf{Método de Agrupamento} de modo análogo como o paradigma de Agrupamento o objeto deste método é de dividir em grupos os objetos semelhantes, além disto, um objeto não possui ligação ou referência em outro agrupamento, desta forma garante-se que cada conjunto possua diversos elementos e cada elemento pertence unicamente a um único agrupamento~\cite{celinski1998clustering}.
+
+    % Os \textbf{Métodos de Conjuntos} se mostram muito eficientes na precisão da tarefa de classificação. Como o próprio nome sugere, esse método cria conjuntos de classificadores, após aplicar tal conjunto nos novos dados~\cite{gislason2006ensable, dietterich2000ensemble}.
+
+    % A categoria de algoritmos dos \textbf{Métodos de Kernels} podem ser aplicadas em diversas atividades como classificação. agrupamentos, regressão, dentre outras. Há diferentes kernels na literatura, cada um deles ajusta-se melhor para determinada base de dados, além disto, esses métodos foram desenvolvidos para fazer o processamento de matrizes quadradas simétricas positivas~\cite{vert2004kernel}.
+
+    %Uma rede neural tem entrada, processamento e saída. A entrada são os atributos na base de dados, o processamento é a aplicação dos pesos para cada entrada e a saída é casualmente binária, podendo ser uma nova entrada para outro neurônio, para o caso de redes com mais de uma camada.
+
+    % \textbf{Redes Neurais Artificiais} resolvem problemas de classificação e de regressão. Essa categoria possui algumas características as quais se assemelham com o cérebro humano, dentre elas, o processo que simula uma sinapse que seria a propagação do pulso elétrico ou não, a simulação de um ou mais neurônios~\cite{russell2009artificial}.
+
+    % O aprendizado baseado em \textbf{Redução de Dimensionalidade}, como o próprio nome sugere, são necessários para extrair quais os atributos que representam bem as instâncias garantindo integridade na hora da classificação. Bases de dados possuem uma dimensionalidade alta quando a quantidade de atributos é elevada e nem todos os atributos são relevantes para conseguir classificar a instância. Além disto, é importante destacam que há dois tipos de redução, uma que foca em reduzir atributos e a outra onde o principal objetivo é reduzir a quantidade de instâncias na base~\cite{garcia2015data, kantardzic2011data}.
+
+    % Ao aplicar algoritmos de redução de dimensionalidade ao fim de sua execução irá obter-se uma base de dados $D'$ onde nela irá constar apenas os atributos que possuem um grau de influência elevado para a classificação do exemplo. Portanto, por existir uma quantidade menor de atributos ou instâncias na base os algoritmos de classificação/regressão vão sofrer uma diminuição no seu tempo de execução, tornando o processamento mais eficiente.
+
+    % A \textbf{Análise de Regressão} pode ser explicada com a definição de regressão apresentada na Seção~\ref{sec:machine-learning}. A regressão é a utilização de funções algébricas no intuito de encontrar uma relação entre cada exemplo $x$ e sua classe $y$, pertencentes ao conjunto de treinamento $D$~\cite{mohri2012foundations, murphy2012probabilistic}.
+    
+    \subsection{Baseado em Árvores de Decisão}
+        \label{subsec:decisive-tree}
+        Árvores de Decisão são baseadas no método da inferência indutiva, onde cada nó da árvore representa um atributo a ser examinado, suas ramificações correspondem aos possíveis valores nos quais o atributo assume e a classe localiza\hyp{se} na folha. A medida que uma instância vai percorrendo a árvore ela é classificada~\cite{mitchell1997machine, quinlan1986induction}. Árvores de decisão possuem o desempenho mais efetivo sobre bases de dados cujo conjunto de atributos pode ser numérico e/ou categórico.
+
+        %explicar funcionamento do rpartxse
+        Dessa categoria, será utilizado o algoritmo \textit{rpartXse}, o qual~\citeonline{torgo2013package} o descreve como uma modificação do algoritmo \ac{rpart}, que realiza uma única chamada do classificador juntamente da regra da poda da árvore. Por sua vez o \ac{rpart} é uma implementação de uma árvore baseando\hyp{se} no livro Classification and Regression Trees, onde a regra da poda da árvore (1-SE) é descrita~\cite{breiman1984tree, therneau2000tree}.
+
+        %Dependendo do algoritmo que seja escolhido, após sua execução verificando a distribuição da árvore por meio de uma busca em largura obtém\hyp{}se a ordem dos atributos de maior influência na classificação partindo do nó central até as folhas.
+
+    \subsection{Baseado no Método Bayesiano}
+        \label{subsec:bayesiano-method}
+        A partir do teorema de Bayes oriundo da estatística a chance de um evento $A$ acontecer, dado $B$ ter ocorrido, supondo que $A$ e $B$ são eventos distintos, é apresentado na Equação~\ref{eq:bayes}. Um classificador Bayesiano calcula a probabilidade do exemplo pertencer a cada uma das classes existentes na base, e associa-o à classe que obtiver o melhor resultado~\cite{alpaydin2004introduction, au2017bayes, zellner1996bayes}.
+        \begin{equation}
+            \label{eq:bayes}
+            P(A|B) = \frac{P(B|A) * P(A)}{P(B)}
+        \end{equation}
+        
+        %explicar funcionamento do naivebayes
+        O Na\"ive Bayes é um dos classificadores desta categoria. O seu modo de associar uma classe a um exemplo é calculando a probabilidade a partir da contagem da frequência e das combinações dos valores nos atributos. O classificador Na\"ive Bayes assume que todos os atributos são independentes entre si e a classe como dependente, entretanto, são raros os casos nos quais os atributos da base são independentes entre si. Ainda assim ele é bastante utilizado, uma vez que sua execução é eficiente e rápida para muitos dos problemas supervisionados~\cite{dimitoglou2012naive}.
+
+
+    \subsection{Baseado em Instâncias}
+        \label{subsec:instace-methods}
+        Tal categoria também é conhecida como Aprendizado Preguiçoso, ou Aprendizado Baseado em Memória. Eles possuem tal característica por utilizarem todos os dados para gerar cada previsão, encontrando um conjunto de vizinhos próximos, baseando-se em funções matemáticas de distâncias entre pontos onde os vizinhos mais próximos tem uma relevância maior~\cite{atkeson1997lazy, russell2009artificial}. Os classificadores baseados em instâncias possuem o melhor desempenho sobre bases de dados com atributos numéricos e, preferencialmente normalizados, uma vez que utilizam medidas de distância com o objetivo de identificar as instâncias próximas entre si.
+
+        %explicar funcionamento do knn
+        O \ac{knn} é um dos algoritmos do aprendizado em instâncias, cuja ideia é utilizar uma quantidade de instâncias \textit{k} que sejam as mais próximas, mediante a distância, do exemplo que está sendo avaliado. Existem diversas métricas utilizadas na realização desse cálculo, dentre elas: a distância Euclidiana, a distância de \textit{Chebychev} também conhecida como valor máximo, a distância de \textit{Manhattan} que é calculada através da diferença do par dos pontos dados~\cite{aha1991, mulak2015analysis}.
+
+    \subsection{Regras de Associação}
+        \label{subsec:association-rules}
+        O aprendizado baseado nesta sub\hyp{divisão} funciona de forma que os algoritmos realizam uma avaliação dos atributos da base de dados, gerando assim um conjunto de regras. Em seguida, este conjunto de regras será submetido a testes para verificar o quão válidas tais regras são para a base, a fim de validar este conhecimento~\cite{gollapudi2016practical}. Esse processo se repete até que todas as classes da base de dados possua um conjunto de regras.
+        
+        %explicar funcionamento do ripper
+        Nessa categoria, existe o algoritmo \acs{ripper} (do inglês, \textit{\acl{ripper}}), que é uma evolução desenvolvida do \acs{irep} (do inglês \textit{\acl{irep}}), por sua vez, baseá\hyp{se} na técnica \acs{rep} (do inglês, \acl{rep}) já existente nos algoritmos baseados em árvores~\cite{cohen1995ripper}. A sua execução é dada por uma análise inicial nas classes, gerando um conjunto de regras, a partir do qual esse algoritmo analisa se todos os exemplos são cobertos pelo conjunto de regras da classe específica. Finalizada essa etapa, o algoritmo troca a classe e reinicia o processo, até que todas as classes obtenham os seus conjuntos de regras~\cite{rajput2011j48}.

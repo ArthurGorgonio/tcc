@@ -1,0 +1,145 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%      Proposta de solução      %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Neste tópico deverão ser apresentadas suas propostas para solucionar o problema de seu trabalho, para o TCC II deverão ser apresentadas, também, as formas de implantação destas soluções.
+
+\section{Proposta de Solução}
+    \label{sec:proposta-de-solucao}
+    
+    Neste Tópico serão discutidas as bases de dados utilizadas nesta pesquisa e as ideias dos algoritmos. O Algoritmo \ref{alg:flexcon-c} apresenta a ideia geral do \ac{flexcon}, que a sua execução é dada por: i) separar os exemplos rotulados dos exemplos não rotulados; ii) treinar o classificador $f$ utilizando o conjunto dos rotulados $L$; iii) aplicar $f$ no conjunto dos não rotulados $U$, gerando assim uma matriz com o exemplo, sua respectiva classe e confiança do classificador; iv) selecionar todos os exemplos dado a regra de inserção; v) adicionar todos os exemplos de $S$ em $L$; vi) utilizar o conjunto $S$ para treinar um classificador $f'$; vii) aplicar o classificador $f'$ em $L$; viii) atualizar o valor do limiar de inserção com base na acurácia obtida em $f'$.
+    
+    O \ac{flexcon} decide se o exemplo deve ir para o conjunto dos rotulados realizando uma varredura nas regras de inserção de exemplos que são: i) os exemplos são da mesma classe e as confianças são maiores que o limiar; ii) os exemplos possuem a mesma classe, porém apenas uma de suas confianças é maior que o limiar; iii) os exemplos possuem classes diferentes e ambas as confianças são maiores que o limiar; e iv) os exemplos possuem classes diferentes e uma das confianças é maior que o limiar. A regra de inserção subsequente só é executada se, e somente se, executar a varredura e nenhum exemplo se aplicar na regra atual e caso não consiga selecionar nenhum exemplo e todas as regras foram percorridas a confiança é alterada para o maior valor de confiança da predição da iteração corrente.
+    
+    \begin{algorithm}[H]
+        \caption{Pseudo\hyp{Código} do \acs{flexcon}}
+        \label{alg:flexcon-c}
+        \SetAlgoLined
+        \begin{algorithmic}[1]
+            \REQUIRE \textit{dados rotulados} $\{(\mathbf{x}_i, y_i)\}^l_{i = 1}$, \textit{dados não rotulados} $\{\mathbf{x}_j\}^{l+u}_{j=l+1}$
+            \ENSURE $L \leftarrow \{(\mathbf{x}_i, y_i)\}^l_{i = 1}$ \textit{e} $U \leftarrow \{\mathbf{x}_j\}^{l+u}_{j = l+1}$
+            \REPEAT
+            	\STATE \textit{Treinar $f$ com os exemplos de $L$ usando aprendizado supervisionado}
+            	\STATE \textit{Aplicar $f$ as instâncias não rotuladas em $U$}
+            	\STATE \textit{Remover um subconjunto $S$ de $U$ tal que o exemplo se enquadre com uma das regras inclusão de novos exemplos}
+            	\STATE \textit{Adicionar $\{(\mathbf{x}, f(\mathbf{x}))|\mathbf{x} \in  S\}$ a $L$}
+            	\STATE \textit{Treinar $f'$ com os exemplos de $S$ utilizando aprendizado supervisionado}
+            	\STATE \textit{Aplicar $f'$ as instâncias em $L$}
+            	\STATE \textit{Atualizar o limiar de inclusão a partir da acurácia em $f'$}
+            \UNTIL{$U = \emptyset$}
+        \end{algorithmic}
+    \end{algorithm}
+	\begin{center}
+        \vspace{-2em}
+        \source{Adaptado de~\cite{vale2018selftraining}}
+	\end{center}
+    
+    
+    
+    O \ac{flexcon} utiliza duas abordagens diferentes \textit{FlexCon\hyp{C1}} e \textit{FlexCon\hyp{C2}} para decidir qual rótulo será atribuído a cada exemplo. O algoritmo \textit{FlexCon\hyp{C1}} guarda a predição da primeira iteração e para comparar com a predição da iteração corrente. Quando as predições convergem entre as classes o exemplo é adicionado. Caso o exemplo seja selecionado para ser incluído no conjunto dos exemplos rotulados a sua classe é definida através da quantidade de vezes que ele obteve um determinada classe. Isso gerou duas versões do mesmo algoritmo \textit{FlexCon\hyp{C1}}(s) que utiliza a soma das confianças obtidas desde a primeira iteração até a atual para realizar essa decisão e \textit{FlexCon\hyp{C1}}(v) que faz uso de votação onde é contabilizado somente as ocorrências do exemplo em cada classe.
+        
+    
+    O algoritmo \textit{FlexCon\hyp{C2}} compara as predições do classificador da iteração corrente com a predição de um classificador supervisionado que é treinado com as instâncias inicialmente rotuladas. Quando as predições convergem entre as classes o exemplo é adicionado, caso o exemplo selecionado para a inclusão não possua a mesma classe nas predições, o rótulo é selecionado verificando o rótulo do classificador supervisionado.
+    
+    O limiar da iteração subsequente é calculado verificando se o conjunto dos exemplos adicionados na iteração atual possui uma quantidade mínima de exemplos de todas as classes, em caso positivo o classificador treina com os exemplos adicionados da iteração e testa com os exemplos inicialmente rotulados. Em caso negativo o conjunto de treino fica se acumulando até possuir a quantidade mínima de exemplos por classe.
+    % \vspace{-1em}
+    % \noindent
+    % onde, $L$ representa o conjunto de dados inicialmente rotulados, $U$ representa o restante da base de dados contendo os exemplos não rotulados, $f$ é o classificador que vai realizar o aprendizado de modo supervisionado a partir do conjunto $L$, $S$ representa o subconjunto de $U$ que será incluído em $L$, $\{(\mathbf{x}_i, y_i)\}^l_{i = 1}$ o \textit{i}\hyp{ésimo} par elemento e sua respectiva classe no conjunto dos rotulados e $\{\mathbf{x}_j\}^{l+u}_{j=l+1}$ representa o \textit{j}\hyp{ésimo} elemento que pertence ao conjunto dos não-rotulados.
+    
+    O limiar de inclusão da primeira iteração é de 95\%, isto é, as instâncias que na primeira iteração possuírem uma confiança igual ou maior que este valor irão para o conjunto dos dados rotulados. A partir da segunda iteração, o algoritmo irá realizar o cálculo do novo limiar de inclusão considerando a acurácia do classificador e esse limiar foi variado conforme representado na Equação~\ref{eq:conf} proposta em~\cite{vale2018selftraining}.
+    
+    \begin{equation}
+        \label{eq:conf}
+            conf(t_{i+1}) = \left\{
+            \begin{matrix}
+            \begin{split}
+                &conf(t_i) - cr,  se\ acc \geq mp + e \\ 
+                &conf(t_i),       se\ mp - e < acc < mp + e \\ 
+                &conf(t_i) + cr,  se\ acc \leq mp - e
+            \end{split}
+            \end{matrix}\right.
+    \end{equation}
+    
+    \noindent
+    onde, $conf(t_{i+1})$ é a confiança da próxima iteração, $conf(t_i)$ é a confiança da iteração atual, $cr$ é a taxa de variação na qual o limiar é aplicado, $acc$ é a acurácia do classificador, $mp$ precisão mínima e $e$ é uma variação de precisão aceitável que é permitida para definir uma estabilização em precisão.
+    
+    Em \citeonline{vale2018selftraining} o $cr$ foi fixo em 5\%, isto é, o limiar variava em 5 pontos percentuais por iteração. Entretanto, este trabalho pretende utilizar diversos valores [$2\%, 8\%$] do parâmetro $cr$ para analisar o seu efeito na classificação dos dados.
+    
+    
+    % FlexConf-C1
+    % usa 2 predições a da iteração atual e a 1 iteração
+    % duas versões soma e voto
+    % nova taxa de confiança é calculada utilizando os novos rotulados para treinamento e o dl para teste
+    %  
+   
+    
+    % \section{Experimentos Parciais}
+    % \label{sec:experimentos}
+    % Montar uma tabela com as i) bases utilizadas, ii) quantidade de instâncias, iii) quantidade de atributos, iv) quantidade de classes, v) tipo da base (Categórico, Numérico, Discreto, etc)
+    
+    % Ressaltar o uso das taxas de instâncias inicialmente rotuladas de 5% até 25% de 5% em 5% além de variar a taxa que é incorporada ao limiar (taxa de variação da confiança) que é de 3%, 5% e 7% (e talvez de uma taxa variável).
+    Com a finalidade de avaliar a eficácia das variações propostas, será realizada uma análise empírica. A partir da aplicação do algoritmo sobre um conjunto de 31 bases de dados. A Tabela~\ref{tab:bases-de-dados} descreve os conjuntos de dados previamente selecionados, em termos do número de exemplos (Instâncias), de atributos e a quantidade de classes para cada conjunto de dados, além de indicar os tipos de dados como categórico (C), inteiro (I) ou real (R).
+    
+    \begin{table}[h]
+        \caption{Bases de Dados que serão utilizadas nos experimentos.}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|} \hline
+            \textbf{Base de dados} & \textbf{Instâncias} & \textbf{Atributos} & \textbf{Classes} & \textbf{Tipo} \\ \hline
+            Balance Scale                   &  625  &   4 &  3 & I \\ \hline
+            Blood Transfusion Service       &  748  &   5 &  2 & R \\ \hline
+            Bupa                            &  345  &   7 &  2 & C, I, R \\ \hline
+            Car                             & 1728  &   6 &  4 & C, R \\ \hline
+            Cnae-9                          & 1080  & 857 &  9 & I \\ \hline
+            Connectionist-mines-vs-rocks    &  208  &  60 &  2 & R \\ \hline
+            Flare                           & 1389  &  10 &  6 & C \\ \hline
+            Haberman                        &  306  &   4 &  2 & I \\ \hline
+            Handwritten Digits              & 10992 &  16 & 10 & I \\ \hline
+            Hill Valley                     &  606  & 101 &  2 & R \\ \hline
+            Image Segmentation              & 2310  &  19 &  7 & R \\ \hline
+            Indian Liver Patient            &  582  &  10 &  2 & I, R \\ \hline
+            Iris                            &  150  &   5 &  3 & R \\ \hline
+            King-Rook vs King Pawn          & 3196  &  36 &  2 & C \\ \hline
+            Leukemia Haslinger              &  100  &  50 &  2 & R \\ \hline
+            Mammographic Mass               &  961  &   6 &  2 & I \\ \hline
+            Mfeat-karhunen                  & 2000  &  64 & 10 & I, R \\ \hline
+            Mushroom                        & 8124  &  22 &  2 & C \\ \hline
+            Musk                            & 6598  & 168 &  2 & I \\ \hline
+            Ozone Level Detection           & 2536  &  73 &  2 & R \\ \hline
+            Phishing                        & 2456  &  30 &  3 & I \\ \hline
+            Pima                            &  768  &   9 &  2 & I, R \\ \hline
+            Planning-relax                  &  182  &  13 &  2 & R \\ \hline
+            Seeds                           &  210  &   7 &  3 & R \\ \hline
+            Semeion                         & 1593  & 256 & 10 & I \\ \hline
+            Spectf Heart                    &  267  &  14 &  2 & I \\ \hline
+            Tic-tac-toe                     &  958  &   9 &  2 & C \\ \hline
+            Twonorm                         & 7400  &  21 &  2 & R \\ \hline
+            Vehicle                         &  946  &  18 &  4 & I \\ \hline
+            Waveform                        & 5000  &  40 &  3 & R \\ \hline
+            Wilt                            & 4839  &   6 &  2 & R \\ \hline
+        \end{tabular}
+        \label{tab:bases-de-dados}
+        \source{O Próprio Autor (\imprimirdata)}
+    \end{table}
+    
+    % Cada uma destas bases de dados será dividida em dois sub\hyp{conjuntos} i) para treinamento do classificador, com 75\% das instâncias; e ii) para teste do classificador, com 25\% das instâncias. Após essa etapa, dos 75\% dos dados de treinamento será selecionado um percentual para permanecer com o rótulo 5\%, 10\%, 15\%, 20\% ou 25\%. Uma vez separados os conjuntos dos rotulados e não rotulados, os dados poderão ser aplicados ao algoritmo para realização da tarefa de classificação. Para isso, pretende\hyp{se} utilizar os classificadores Naïve Bayes, rpartXse, \ac{ripper} e o \ac{knn}.
+    
+    % Cada uma destas bases de dados foi aplicado o \textit{cross\hyp{validation}} com $k$ \textit{folds} onde $1$ \textit{fold} é separado para teste e $k - 1$ \textit{folds} para treinamento~\cite{wong2015cross}.
+    
+    A validação cruzada (do inglês, \textit{cross\hyp{validation}}) é uma técnica utilizada para a validação dos dados obtidos, a base de dados é dividida em $k$ \textit{folds} mantendo\hyp{se} a estratificação dos dados. Além disto, cada \textit{fold} será o conjunto de teste para verificar a acurácia do classificados, essa divisão de treinamento e teste ocorre com $k - 1$ e $k$ \textit{folds}, respectivamente~\cite{wong2015cross}.
+    
+    Após essa etapa, da separação dos \textit{folds} para treinamento do classificador foi selecionado um percentual de exemplos para permanecer com o rótulo. Uma vez separados os conjuntos dos rotulados e não rotulados, os dados são aplicados ao algoritmo para realização da tarefa de classificação. Para isso, pretende\hyp{se} utilizar os classificadores Naïve Bayes, \textit{rpartXse}, \ac{ripper} e o \ac{knn}.
+    
+    Nos experimentos foram utilizados os seguintes parâmetros: 10 \textit{folds} para o \textit{cross\hyp{validation}}~\cite{kohavi1995study, braga2004cross, fushiki2011cross, wong2015cross}. Foram mantidos os mesmos percentuais de instâncias inicialmente rotuladas (5\%, 10\%, 15\%, 20\% e 25\%), e foi utilizado os mesmos classificadores Na\"ive Bayes, \textit{rpartXse}, e \ac{ripper} descrito no trabalho de \cite{vale2018selftraining}. Além disto foi acrescentado outro classificador o \ac{knn} definindo o valor de $k$ em cada base de dados está descrito pela Equação~\ref{eq:k-value} proposto em~\cite{bhattacharya2012knnvalue}.
+    
+    \begin{equation}
+        \label{eq:k-value}
+        k = \sqrt{N}
+    \end{equation}
+    
+    \noindent
+    onde, $N$ representa a quantidade total de instâncias na base de dados.
+%    O \textit{FlexConf\hyp{C1}} é utilizado o além do modelo gerado na iteração corrente também é levado em consideração as predições da primeira iteração. E ainda, esses classificadores individuais são combinados por soma e maioria de votos, levando a duas versões desse método, \textit{FlexConf\hyp{C1}(v)} e \textit{FlexConf\hyp{C1}(s)}. O \textit{FlexConf\hyp{C2}} utiliza o modelo da iteração corrente e um classificador supervisionado para realizar a tarefa de classificação.
+
+    A solução proposta foi desenvolvida na linguagem de programação R, em virtude de ser um software livre (\textit{open source}) que vem apresentando crescimento ao longo dos anos. Além disso, a referida linguagem fornece diversas ferramentas e bibliotecas para facilitar as análises estatísticas.
+    

@@ -1,0 +1,19 @@
+% Neste Tópico é onde o aluno irá discorrer exatamente o problema no qual a sua pesquisa pretende resolver, com base nos objetivos apontados no Capítulo 1.
+
+\section{Questões de Pesquisa}
+    \label{sec:questoes-de-pesquisa}
+
+    % Comparativo de métodos
+    % variação da taxa do limiar
+    % 3%, 5% e 7%
+    % Métricas de avaliação (comparação com 5%)
+    % Analisar os algoritmos e explicar?
+    %  que foram propostos em~\citeonline{vale2018selftraining} são: FlexConf-C1 e FlexConf-C2. 
+
+    Como explanado na Subseção~\ref{subsec:objetivo-geral}, esse trabalho realizou a comparação dos algoritmos \textit{FlexCon\hyp{C1}} e \textit{FlexCon\hyp{C2}}, realizando manipulações exclusivamente na taxa de variação do limiar, mantendo a proposta original discutida em~\cite{vale2018selftraining}, taxa de variação fixa em 5\% . Neste trabalho, foi analisada a influência na classificação de dados quando aplicadas diversos valores para a taxa de variação do limiar. A variação aplicada ao limiar foi entre 2\% e 8\%, comparando os resultados obtidos para cada um destes valores com o valor base 5\%.
+
+    A validação da proposta deste trabalho foi por meio de uma comparação das médias das acurácias e as variâncias obtidas pelo respectivo classificador. Para realizar uma análise do ponto de vista estatístico foi realizada a análise de variância (do inglês, \ac{anova}) que é um teste de hipótese que valida se duas ou mais populações são iguais. Esse teste, tem como resultado um parâmetro \textit{p\hyp{value}} que sua faixa varia entre (0, 1], quando esse fator possui um valor menor que 0.05 é dito que a hipótese testada é estatisticamente significante, caso contrário ela não é significante.
+
+    % Para avaliação do ponto de vista estatístico, o teste de \textit{Friedman and Nemenyi Post-Hoc} foi selecionado para essa comparação, por realizar análise de variância não paramétrica bidirecional~\cite{norheim1986friedman}.
+
+    % Como métricas de avaliação será desenvolvida uma comparação dos algoritmos a partir média das acurácias obtidas nas bases de dados com um dos classificadores alterando apenas a variação que é incorporada ao limiar. Essa análise será realizada com o teste estatístico de \textit{Friedman and Quade}, por ser uma análise de variância não paramétrica bidirecional.

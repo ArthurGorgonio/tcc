@@ -1,0 +1,81 @@
+\section{Aprendizado de Máquina}
+    \label{sec:machine-learning}
+    
+    Atualmente, o grande volume das bases de dados contribui para tornar mais complexa a obtenção de informações que deveriam ser consideradas no processo de tomada de decisão. Entretanto, quando os humanos realizam esse processamento, os resultados (informações) são obtidos mais lentamente. Para isso, surge a necessidade de utilizar processos computacionais com a finalidade de agilizar a aquisição das informações.
+    
+    Diante deste desafio, o \ac{am} surge como um campo de estudo que está relacionado principalmente à capacidade de desenvolver nos computadores um aprendizado semelhante ao dos seres vivos. Desta forma, a máquina torna\hyp{se} capaz de aprender a partir de experiências passadas, conseguindo melhorar o seu desempenho no futuro. Essa área destaca\hyp{se} com os carros autodirigidos, na forma como o \textit{feed} de notícias é ordenado pelo \textit{Facebook} ou em sugestões de outros produtos quando se está realizando uma compra online.
+    
+    %Contudo, existe um teste criado pelo cientista Alan Turing para identificar se uma máquina é inteligente esse teste ficou amplamente conhecido como teste de Turing. Em~\citeonline{turing1950turingtest} é descrito um teste que consistia em fazer um computador conversar com um humano e a pessoa não perceber que era um computador que estava conversando com ele.
+    
+    % Em 1950, Alan Turing desenvolveu um teste para saber se o computador era inteligente, esse teste consistia em fazer um computador conversar com um humano e a pessoa não perceber que era um computador que estava conversando com ele~\cite{marr2016}.
+    
+    No contexto do \ac{am} existem diversos termos que são utilizados no decorrer deste trabalho, o Quadro~\ref{quad:machine-learning-terms} apresenta os termos utilizados no decorrer do trabalho e o seu significado.
+    
+    %Uma definição de \ac{am} seria métodos computacionais utilizando experiências para melhorar a eficiência ou ter mais certeza em suas predições \cite{mohri2012foundations}. Uma máquina seria capaz de aprender conforme as suas experiências passadas e melhorar seu desempenho em experiências futuras \cite{mitchell1997machine}.
+    
+    %%Explicar cada termo do \ac{am}(exemplo/instância/atributo/classe) utilizando uma base como exemplo
+    
+    %No \ac{am} os termos exemplo e instância represent\ac{am}um linha na base de dados, o termo atributo representa uma coluna na base de dados e o termo classe é designado a coluna ao qual faz-se uma classificação da instância.
+    
+    \begin{quadro}
+        \centering
+        \caption{Alguns termos do \ac{am}.}
+        \begin{tabular} {c|c} \hline
+            \label{quad:machine-learning-terms}
+            \textbf{Termo} & \textbf{Significado} \\ \hline
+            Atributo & Cada coluna da base de dados \\ \hline
+            Classe/Rotulo & Categoria ao qual o exemplo pertence \\ \hline
+            Classificador & Algoritmo utilizado na tarefa do \ac{am} \\ \hline
+            Exemplo/Instância & Uma linha da base de dados \\ \hline
+            Base de treinamento & Conjunto de exemplo aplicado ao classificador a fim de treiná-lo \\ \hline
+            Base de teste & Conjunto de exemplos no qual o classificador é testado \\ \hline
+        \end{tabular}
+        \source{Adaptado de \cite{gollapudi2016practical, mohri2012foundations}}
+    \end{quadro}
+    
+    \citeonline{russell2009artificial} defendem que o \ac{am} é uma sub\hyp{área} da Inteligência Artificial preocupada com programas que aprendam com a experiência. Para tornar ágeis os processos que seriam complexos ou impossíveis de serem realizados por humanos, podem ser empregados métodos computacionais que aprendam a partir de experiências~\cite{mitchell1997machine, mohri2012foundations}.
+        
+    % Partindo da utilização de métodos computacionais que aprendam a partir de experiências, para auxiliar decisões futuras, tornando ágeis os processos que seriam complexos ou impossíveis de serem realizados por humanos~\cite{mitchell1997machine, mohri2012foundations}.
+    
+    %O objetivo do \ac{am} é desenvolver no computador a capacidade de aprendizado, característica presente nos seres vivos. Realizar abstrações corretas dos conceitos é uma tarefa complexa, onde muitas vezes existe a necessidade de recorrer à memória com o propósito de recordar sua(s) decisão(ões) e consequência(s). O \ac{am} pode ser considerado e utilizado nos casos em que se deseja elevar o processamento de dados, obter informações específicas em tempo hábil e automatizar processos.
+    
+    Um exemplo de aplicação é a automatização do processo de concessão de empréstimos bancários, no qual o \ac{am} é responsável por aprender os perfis de clientes para os quais o banco rejeitaria ou concederia esse tipo de movimentação financeira. Baseando\hyp{se} em registros anteriores, o algoritmo é capaz de criar um classificador e gerar a inteligência que definiria se um novo cliente está capaz de receber o empréstimo ou não. 
+    
+    
+    %Dentro do \ac{am} há diversas sub\hyp{}divisões, iniciando-se pela identificação sobre a sub\hyp{}área na qual o problema está inserido observando o conjunto de dados. Por fim, verifica\hyp{}se a categoria do problema de aprendizado que irá ser utilizada, de acordo com as escolhas anteriores.
+    O \ac{am} possui diversas sub\hyp{áreas} e sua escolha está relacionada à base de dados, se ela possuir o atributo classe e o problema a ser tratado for de classificação ou regressão deve\hyp{se} optar pelo aprendizado Supervisionado. Porém, há casos que na base existam poucas instâncias rotuladas então, o Semissupervisionado se torna mais efetivo. Também há situações que não existe os rótulos dos exemplos, entretanto há a possibilidade de separá\hyp{los} a partir de suas características, quando isso ocorre o aprendizado Não Supervisionado é selecionado. Para \citeonline{gollapudi2016practical} e \citeonline{wiley2016deeplearning} a área do \ac{am} está divida em 5 sub\hyp{áreas}, sendo elas: 
+    \begin{enumerate}[label=\roman*.]
+        \item Aprendizado Supervisionado {--} Todos os dados possuem o atributo classe, isso é, para cada exemplo na base de dados existe uma classe relacionada;
+        \item Aprendizado Não Supervisionado {--} Os dados não possuem uma classificação, porém existe a possibilidade de agrupa\hyp{los} de modo que os exemplos do mesmo agrupamento sejam similares;
+        \item Aprendizado Semissupervisionado {--} Essa sub\hyp{área} está na intercessão dos aprendizados Supervisionado e Não Supervisionado, ou seja, um sub-conjunto dos dados possui classe e o restante não, porém, a partir deste conjunto rotulado, consegue\hyp{se} classificar os demais dados;
+        \item Aprendizado por Reforço {--} Há um agente que executa uma ação no ambiente e tal ação gera uma recompensa, esse aprendizado está muito voltado ao contexto de jogos;
+        \item Aprendizado Profundo {--} É voltado para realizar o processamento de um grande número de variáveis sendo bastante eficaz nas áreas de reconhecimento de imagem e processamento de linguagem natural.
+    \end{enumerate}
+    
+    O aprendizado é Supervisionado quando para cada exemplo existente na base de dados existe uma classe associada ao mesmo, ou seja, $(\mathbf{x}_1, y_1), (\mathbf{x}_2, y_2), \dots, (\mathbf{x}_n, y_n)$ com $\mathbf{x}_i \in X$ e $y_i \in Y$, onde $X$ e $Y$ são os conjuntos dos exemplos e das classes, respectivamente. A Equação~\ref{eq:supervised} apresenta, de forma geral, o aprendizado supervisionado, $\mathbf{x}_i$ representa o \textit{i}\hyp{ésimo} exemplo, $y_i$ refere\hyp{se} a \textit{i}\hyp{ésima} classe, $i = 1$ o primeiro elemento variando até o \textit{l}\hyp{ésimo} elemento do conjunto dos rotulados ($L$).
+    
+    \begin{equation}
+        \label{eq:supervised}
+        L = \{(\mathbf{x}_i, y_i)\}^{l}_{i=1} | x \in X, y \in Y, 1 \leq i \leq l
+    \end{equation}
+    
+    Por outro lado, o aprendizado Não Supervisionado, ocorre quando os dados não possuem uma classificação, ou seja, $Y = \emptyset$. Entretanto existe a possibilidade de dividi\hyp{los} em agrupamentos cujos elementos de um mesmo agrupamento são semelhantes entre si. A Equação~\ref{eq:not-supervised} demonstra o \textit{j}\hyp{ésimo} exemplo existente dentro do conjunto dos dados não rotulados ($U$), iniciado em $j = 1$ e finalizando no \textit{u}\hyp{ésimo} elemento.
+    
+    \begin{equation}
+        \label{eq:not-supervised}
+        U = \{\mathbf{x}_j\}^{u}_{j=1} | x \in X, 1 \leq j \leq u
+    \end{equation}
+    
+    
+    Por fim, as Equações~\ref{eq:semi-supervised-supervised} e \ref{eq:semi-supervised-unsupervised} descrevem de forma geral o aprendizado Semissupervisionado, onde $L$ e $U$ representam os conjuntos de dados rotulados e não rotulados, respectivamente. $\{(\mathbf{x}_i, y_i)\}$ o par do \textit{i}\hyp{ésimo} exemplo e respectiva classe, $i = 1$ o primeiro exemplo variando até o \textit{l}\hyp{ésimo} exemplo rotulado e $\{\mathbf{x}_j\}$ o \textit{j}\hyp{ésimo} elemento iniciado em $j = l + 1$ finalizando em $l+u$ que é todo o conjunto de dados retirando a parte rotulada.
+    
+    \begin{equation}
+        \label{eq:semi-supervised-supervised}
+        L = \{(\mathbf{x}_i, y_i)\}^l_{i = 1} | x \in X, y \in Y, 1 \leq i \leq l \\
+    \end{equation}
+    
+    \begin{equation}
+        \label{eq:semi-supervised-unsupervised}
+        U = \{\mathbf{x}_j\}^{l+u}_{j = l+1} | x \in X, y \in Y, l + 1 \leq j \leq l + u
+    \end{equation}
+    
