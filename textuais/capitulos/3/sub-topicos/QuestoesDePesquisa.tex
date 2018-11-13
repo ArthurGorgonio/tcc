@@ -10,9 +10,15 @@
     % Analisar os algoritmos e explicar?
     %  que foram propostos em~\citeonline{vale2018selftraining} são: FlexConf-C1 e FlexConf-C2. 
 
-    Como explanado na Subseção~\ref{subsec:objetivo-geral}, esse trabalho realizou a comparação dos algoritmos \textit{FlexCon\hyp{C1}} e \textit{FlexCon\hyp{C2}}, realizando manipulações exclusivamente na taxa de variação do limiar, mantendo a proposta original discutida em~\cite{vale2018selftraining}, taxa de variação fixa em 5\% . Neste trabalho, foi analisada a influência na classificação de dados quando aplicadas diversos valores para a taxa de variação do limiar. A variação aplicada ao limiar foi entre 2\% e 8\%, comparando os resultados obtidos para cada um destes valores com o valor base 5\%.
+    Como explanado na Subseção~\ref{subsec:objetivo-geral}, este trabalho conduziu uma análise no comportamento do método \ac{flexcon}, realizando manipulações exclusivamente na taxa de variação do limiar, mantendo a proposta original discutida em~\cite{vale2018selftraining}, taxa de variação fixa em 5\%. Na presente pesquisa, foi avaliada a influência do parâmetro que varia o limiar na classificação de dados. A faixa de variação do parâmetro considerada foi entre 2\% e 8\%, comparando os resultados obtidos de cada um destes valores com o valor base 5\%.
 
-    A validação da proposta deste trabalho foi por meio de uma comparação das médias das acurácias e as variâncias obtidas pelo respectivo classificador. Para realizar uma análise do ponto de vista estatístico foi realizada a análise de variância (do inglês, \ac{anova}) que é um teste de hipótese que valida se duas ou mais populações são iguais. Esse teste, tem como resultado um parâmetro \textit{p\hyp{value}} que sua faixa varia entre (0, 1], quando esse fator possui um valor menor que 0.05 é dito que a hipótese testada é estatisticamente significante, caso contrário ela não é significante.
+    A validação da proposta deste trabalho foi por meio de uma comparação das médias das acurácias e variâncias obtidas pelo respectivo classificador. Para realizar uma análise do ponto de vista estatístico foi aplicado o teste de \textit{Friedman}, pois esse ignora a suposição de normalidade dos dados. \citeonline{friedman1937test} definiu um teste estatístico que realiza um ranqueamento dos dados ao invés de utilizar os dados brutos, para evitar a suposição da normalidade. Esse tipo de análise pode ser empregada no lugar da análise de variância quando há mais de um critério de classificação. A hipótese nula desse teste afirma que o efeito da variável-resposta é nulo entre as populações testadas.
+
+    Ao aplicar o teste, os dados foram convertidos em uma matriz M x N onde, M corresponde aos blocos que representam os indivíduos da população e N corresponde as diversas condições/tratamentos~\cite{pereira2015friedman}.
+
+    % Esse teste recebe uma matriz M x N onde, M corresponde aos blocos que representam os indivíduos da população e N corresponde as diversas condições/tratamentos~\cite{pereira2015friedman}.
+
+    % realizada a análise de variância (do inglês, \ac{anova}) que é um teste de hipótese que valida se duas ou mais populações são iguais. 
 
     % Para avaliação do ponto de vista estatístico, o teste de \textit{Friedman and Nemenyi Post-Hoc} foi selecionado para essa comparação, por realizar análise de variância não paramétrica bidirecional~\cite{norheim1986friedman}.
 

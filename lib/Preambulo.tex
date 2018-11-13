@@ -19,7 +19,6 @@
 
 \usepackage{booktabs}
 
-
 % Manutenção das legendas em imagens (fonte pequena, 10pt)
 \usepackage[font=small]{caption}
 
@@ -31,6 +30,9 @@
 
 % Inserir figuras
 \usepackage{graphicx}
+
+% Gráficos com o GNUPLOT
+\usepackage{gnuplottex}
 
 % Dimensões do documento
 \usepackage[left=3.0cm, right=2.0cm, top=3.0cm, bottom=2.0cm]{geometry}
@@ -44,14 +46,19 @@
 % Índice
 \usepackage{imakeidx}
 
-
 % Identar do primeiro parágrafo de cada seção
 \usepackage{indentfirst}
 
 % Acentuação direta
 \usepackage[utf8]{inputenc}
 
-% para melhorias de justificação
+% Tabelas muito longas
+\usepackage{longtable}
+
+% Quebra textos longos na mesma céula
+\usepackage{makecell}
+
+% Melhorias de justificação
 \usepackage{microtype}
 
 % Mescla de células em tabelas
@@ -68,18 +75,15 @@
 % Texto em Times New Roman
 \usepackage{times}
 
-%\usepackage{tocloft}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Pacotes com Hierarquia %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[brazilian, hyperpageref]{backref}	 % Paginas com as citações na bibl
+% Paginas com as citações na bibl
+\usepackage[brazilian, hyperpageref]{backref}
 
 % Referências
 \usepackage[alf, bibjustif, abnt-etal-list=0, abnt-etal-text=it]{abntex2cite}
-
-
 
 % ---
 % Configurações do pacote backref

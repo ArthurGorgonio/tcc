@@ -1,0 +1,71 @@
+\section{\textit{Design} de Experimento}
+    \label{sec:design-experimento}
+
+    Nesta seção está descrito o \textit{design} (modelo lógico) utilizado para a execução dos experimentos, conforme apresentado no Algoritmo~\ref{alg:design}.
+    
+    Cada um dos classificadores selecionados para esse estudo (Naïve Bayes, \textit{rpartXse}, \ac{knn} e \ac{ripper}) é avaliado individualmente, utilizando\hyp{se} a técnica de validação cruzada (do inglês, \textit{cross\hyp{validation}}). Essa técnica é utilizada para a validação de dados obtidos em experimentos, dividido\hyp{se} a base de dados em $k$ \textit{folds} e mantendo\hyp{se} a estratificação (proporção de cada classe) nos mesmos. Além disto, cada \textit{fold} é utilizado como conjunto de teste para verificar a acurácia do classificador, sendo utilizados $k - 1$ \textit{folds} para treinamento e $1$ \textit{fold} para teste do classificador~\cite{wong2015cross}.
+    
+    O algoritmo recebe por parâmetro o classificador e a execução segue os seguintes passos: i) para cada base de dados, carregue\hyp{a} em memória; ii) separe os \textit{folds} na base selecionada; iii) para cada valor do parâmetro $cr$, itere os percentuais de exemplos inicialmente rotulados; iv) para cada um dos percentuais de exemplos inicialmente rotulados, percorra os \textit{folds} criados; v) para cada um dos \textit{folds}, separe os conjuntos de treino e teste; vi) gere os modelos a partir do método \ac{flexcon}; vii) teste a acurácia dos modelos com o conjunto selecionado para teste; viii) grave as informações em arquivo.
+    
+    Com este \textit{design}, garante\hyp{se} a mesma distribuição dos \textit{folds} para as técnicas implementadas, quando fixados os valores do parâmetro $cr$ e da taxa de exemplos inicialmente rotulados. Além disto, o \ac{flexcon} teve que ser adaptado para receber dois parâmetros, o valor do $cr$ e o classificador a ser utilizado.
+
+    % Cada uma destas bases de dados será dividida em dois sub\hyp{conjuntos} i) para treinamento do classificador, com 75\% das instâncias; e ii) para teste do classificador, com 25\% das instâncias. Após essa etapa, dos 75\% dos dados de treinamento será selecionado um percentual para permanecer com o rótulo 5\%, 10\%, 15\%, 20\% ou 25\%. Uma vez separados os conjuntos dos rotulados e não rotulados, os dados poderão ser aplicados ao algoritmo para realização da tarefa de classificação. Para isso, pretende\hyp{se} utilizar os classificadores Naïve Bayes, rpartXse, \ac{ripper} e o \ac{knn}.
+
+    % Cada uma destas bases de dados foi aplicado o \textit{cross\hyp{validation}} com $k$ \textit{folds} onde $1$ \textit{fold} é separado para teste e $k - 1$ \textit{folds} para treinamento~\cite{wong2015cross}.
+    
+    \begin{algorithm}[H]
+        \caption{\textit{Design} de Experimento utilizado}
+        \label{alg:design}
+        \SetAlgoLined
+        \begin{algorithmic}[1]
+            \REQUIRE \textit{classificador cl}
+            \FORALL{base em base\_de\_dados}
+                \STATE \textit{base\_carregada $\leftarrow$ carregar\_base(base)}
+                \STATE \textit{folds $\leftarrow$ separar\_folds(base\_carregada)}
+                \FORALL{$cr$ em \textit{change\_rate}}
+                    \FOR{\textit{i $\leftarrow$ 1 até 5}}
+                        \STATE \textit{ini\_rot $\leftarrow$ i * 5}
+                        \FORALL{\textit{fold} em \textit{folds}}
+                            \STATE \textit{\textit{teste} $\leftarrow$ fold}
+                            \STATE \textit{treinamento $\leftarrow$ folds - fold}
+                            \STATE \textit{L $\leftarrow$ selecionar\_exemplos(treinamento, ini\_rot)}
+                            \STATE \textit{U $\leftarrow$ treinamento - L}
+                            \STATE \textit{modelo\_c1\_s $\leftarrow$ flexcon\_c1\_s(L, U, cr, cl)}
+                            \STATE \textit{modelo\_c1\_v $\leftarrow$ flexcon\_c1\_v(L, U, cr, cl)}
+                            \STATE \textit{modelo\_c2 $\leftarrow$ flexcon\_c2(L, U, cr, cl)}
+                            \STATE \textit{acc\_c1\_s[i] $\leftarrow$ testar\_acc(modelo\_c1\_s, teste)}
+                            \STATE \textit{acc\_c1\_v[i] $\leftarrow$ testar\_acc(modelo\_c1\_v, teste)}
+                            \STATE \textit{acc\_c2[i] $\leftarrow$ testar\_acc(modelo\_c2, teste)}
+                        \ENDFOR
+                    \ENDFOR
+                    \STATE \textit{gravar\_arquivo(acc\_c1\_s, acc\_c1\_v, acc\_c2)}
+                \ENDFOR
+            \ENDFOR
+        \end{algorithmic}
+    \end{algorithm}
+	\begin{center}
+        \vspace{-2em}
+        \source{O Próprio Autor (\imprimirdata)}
+	\end{center}
+
+    \vspace{-2em}
+    Após essa etapa de separação dos \textit{folds} para treinamento do classificador, foi selecionado um percentual de exemplos para permanecer rotulado. Uma vez separados os dados em dois conjuntos: rotulados e não rotulados, estes são aplicados ao algoritmo para realização da tarefa de classificação, utilizando\hyp{se} os classificadores selecionados.
+
+    Nos experimentos foram utilizados os seguintes parâmetros: 
+    
+    \begin{enumerate}[label=\roman*.]
+        \item \textit{k} = 10 \textit{folds} para o \textit{cross\hyp{validation}}, conforme proposto por~\cite{kohavi1995study, braga2004cross, fushiki2011cross, wong2015cross};
+        \item Percentuais de 5\%, 10\%, 15\%, 20\% e 25\% instâncias inicialmente rotuladas, conforme descrito em~\cite{vale2018selftraining};
+        \item Classificadores Na\"ive Bayes, \textit{rpartXse}, e \ac{ripper}, os mesmos utilizados no trabalho de~\cite{vale2018selftraining}, além da inclusão do classificador \ac{knn}.
+    \end{enumerate}
+    
+    O valor de \textit{k} (quantidade de instâncias mais próximas) definido para o \ac{knn} é descrito pela Equação~\ref{eq:k-value}, conforme proposto em~\cite{bhattacharya2012knnvalue}:
+    
+    \begin{equation}
+        \label{eq:k-value}
+        k = \sqrt{N}
+    \end{equation}
+
+    \noindent
+    onde, $N$ representa a quantidade total de instâncias na base de dados.
+    %    O \textit{FlexConf\hyp{C1}} é utilizado o além do modelo gerado na iteração corrente também é levado em consideração as predições da primeira iteração. E ainda, esses classificadores individuais são combinados por soma e maioria de votos, levando a duas versões desse método, \textit{FlexConf\hyp{C1}(v)} e \textit{FlexConf\hyp{C1}(s)}. O \textit{FlexConf\hyp{C2}} utiliza o modelo da iteração corrente e um classificador supervisionado para realizar a tarefa de classificação.

@@ -11,17 +11,8 @@
 \providecommand{\imprimirsubtitulo}{}
 \newcommand{\subtitulo}[1]{\renewcommand{\imprimirsubtitulo}{#1}}
 
-
 % criar fonte em imagens, tabelas e quadros
 \newcommand{\source}[1]{\legend{\textbf{Fonte:} {#1}}}    
-
-% texto em arial
-%\renewcommand{\sfdefault}{phv}
-%\renewcommand{\rmdefault}{phv}
-
-% texto em Times
-%\renewcommand{\sfdefault}{ptm}
-%\renewcommand{\rmdefault}{ptm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                              %%
@@ -37,9 +28,9 @@
 
 \autor{Arthur Costa Gorg\^{o}nio}
 
-\orientador{ MSc. Amarildo Jeiele Ferreira de Lucena}     % nível acadêmico + nome
+\orientador{MSc. Amarildo Jeiele Ferreira de Lucena}     % nível acadêmico + nome
 
-\coorientador{ MSc. Karliane Medeiros Ovidio Vale}
+\coorientador{MSc. Karliane Medeiros Ovidio Vale}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Pacotes com Hierarquia %%
@@ -61,8 +52,7 @@
 }
 
 %% Se for TCC II acrescente mais um I
-\preambulo{\textbf{Trabalho de Conclusão de Curso I}, apresentado ao Curso de Bacharelado em Sistemas de Informação da Universidade Federal do Rio Grande do Norte, como parte dos requisitos para obtenção do título de Bacharel em Sistemas de Informação.}
-
+\preambulo{\textbf{Trabalho de Conclusão de Curso II}, apresentado ao Curso de Bacharelado em Sistemas de Informação da Universidade Federal do Rio Grande do Norte, como parte dos requisitos para obtenção do título de Bacharel em Sistemas de Informação.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                              %%
@@ -88,15 +78,11 @@
 \renewcommand{\cftquadroname}{\quadroname\space} 
 \renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
 
-%\setfloatlocations{quadro}{}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                              %%
 %%   Configurações de aparência do PDF final    %%
 %%                                              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                              %%
 %%         Indentação           %%
@@ -108,7 +94,6 @@
 
 % Controle do espaçamento entre um parágrafo e outro:
 \setlength{\parskip}{0.2cm}  % tente também \onelineskip
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                              %%
@@ -135,10 +120,12 @@
 }
 \makeatother
 
+
 % Algoritmos
+% \TitleOfAlgo{title}
 % \floatname{algorithm}{Algoritmo}%Algoritmo
 % \renewcommand{\listalgorithmname}{LISTA DE ALGORITMOS}
-
+\renewcommand{\algorithmcfname}{Pseudocódigo}
 \renewcommand{\algorithmicindent}{3.0em}
 \renewcommand{\algorithmicrequire}{\textbf{entrada}}
 \renewcommand{\algorithmicensure}{\textbf{garanta}}
@@ -155,4 +142,3 @@
 \renewcommand{\algorithmicuntil}{\textbf{até que}}
 \renewcommand{\algorithmicwhile}{\textbf{enquanto}}
 \renewcommand{\algorithmicdo}{\textbf{fa\c{c}a}}
-

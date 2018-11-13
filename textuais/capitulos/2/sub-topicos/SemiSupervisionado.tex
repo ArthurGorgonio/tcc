@@ -21,7 +21,7 @@
     
     % com os aprendizes baseados em árvore de decisão, regras de associação, no método bayesiano e instâncias
     
-    Neste trabalho será dado um foco maior ao algoritmo \textit{Self\hyp{Training}}, também conhecido por \textit{Self\hyp{Learning}}, \textit{Self\hyp{Labeling}} ou \textit{Decision\hyp{Directed}}. Um algoritmo do \ac{ssl} onde sua execução é dada por: i) iniciar com um conjunto pequeno de dados rotulados; ii) treina o classificador com os exemplos do conjunto dos rotulados $L$; iii) conforme suas previsões realiza a classificação dos exemplos que não possuem classe; iv) adiciona os exemplos no conjunto dos rotulados $L$~\cite{chapelle2006semi, grandvalet2005semi, zhu2009introduction}. No Algoritmo~\ref{alg:self-training} encontra-se o pseudocódigo do \textit{Self\hyp{Training}}.
+    Neste trabalho será dado um foco maior ao algoritmo \textit{Self\hyp{Training}}, também conhecido por \textit{Self\hyp{Learning}}, \textit{Self\hyp{Labeling}} ou \textit{Decision\hyp{Directed}}. Um algoritmo do \ac{ssl} onde sua execução é dada por: i) iniciar com um conjunto pequeno de dados rotulados; ii) treina o classificador com os exemplos do conjunto dos rotulados $L$; iii) conforme suas previsões realiza a classificação dos exemplos que não possuem classe; iv) adiciona os exemplos no conjunto dos rotulados $L$~\cite{chapelle2006semi, grandvalet2005semi, zhu2009introduction}. No Pseudocódigo~\ref{alg:self-training} encontra-se o algoritmo do \textit{Self\hyp{Training}}.
 	
 	%% pseudo-código by araujobd
     %
@@ -44,8 +44,7 @@
         \source{Adaptado de~\cite{zhu2009introduction}}
 	\end{center}
 	
-	
-    \vspace{-1em}
+    \vspace{-2em}
     \noindent
 	onde, $L$ representa o conjunto de dados inicialmente rotulados, $U$ representa o restante da base de dados contendo os exemplos não rotulados, $f$ é o classificador que vai realizar o aprendizado de modo supervisionado a partir do conjunto $L$, $S$ representa o subconjunto de $U$ que será incluído em $L$, $\{(\mathbf{x}_i, y_i)\}^l_{i = 1}$ o \textit{i}\hyp{ésimo} par elemento e sua respectiva classe no conjunto dos rotulados e $\{\mathbf{x}_j\}^{l+u}_{j=l+1}$ representa o \textit{j}\hyp{ésimo} elemento que pertence ao conjunto dos não rotulados.
 % 	\begin{algorithm}
